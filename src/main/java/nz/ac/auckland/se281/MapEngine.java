@@ -19,11 +19,13 @@ public class MapEngine {
     List<String> countries = Utils.readCountries();
     List<String> adjacencies = Utils.readAdjacencies();
 
+    // Add nodes.
     for (String country : countries) {
       String[] countryInfo = country.split(",");
       map.addCountry(new Country(countryInfo[0], countryInfo[1], countryInfo[2]));
     }
 
+    // Connect nodes.
     for (String adjacency : adjacencies) {
       String[] adjacentCountries = adjacency.split(",");
       Queue<Country> adjacentCountriesQueue = new LinkedList<>();
@@ -41,27 +43,41 @@ public class MapEngine {
         map.addPath(start, adjacentCountriesQueue.remove());
       }
     }
-
-    // add code here to create your data structures
   }
 
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
+    MessageCli.INSERT_COUNTRY.printMessage();
+    Country target = getInput();
+    MessageCli.COUNTRY_INFO.printMessage(target.getName(), target.getContinent(), target.getFee());
+  }
+
+  /** this method is invoked when the user run the command route. */
+  public void showRoute() {
+
+    MessageCli.INSERT_SOURCE.printMessage();
+    Country source = getInput();
+    MessageCli.INSERT_DESTINATION.printMessage();
+    Country destination = getInput();
+
+    if (source == destination) {
+      MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+    }
+  }
+
+  public Country getInput() {
     boolean flag = false;
+    Country target = null;
+
     do {
-      MessageCli.INSERT_COUNTRY.printMessage();
       String input = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine().trim());
       try {
-        Country targetCountry = map.getCountry(input);
-        MessageCli.COUNTRY_INFO.printMessage(
-            targetCountry.getName(), targetCountry.getContinent(), targetCountry.getFee());
+        target = map.getCountry(input);
         flag = true;
       } catch (CountryDoesNotExistException e) {
         MessageCli.INVALID_COUNTRY.printMessage(input);
       }
     } while (!flag);
+    return target;
   }
-
-  /** this method is invoked when the user run the command route. */
-  public void showRoute() {}
 }
