@@ -22,4 +22,14 @@ public class Graph {
     adjCountries.get(firstCountry).add(lastCountry);
     adjCountries.get(lastCountry).add(firstCountry);
   }
+
+  public Country getCountry(String name) {
+    for (Country country : adjCountries.keySet()) {
+      ;
+      if (country.getName().equals(name)) {
+        return country;
+      }
+    }
+    return null;
+  }
 }

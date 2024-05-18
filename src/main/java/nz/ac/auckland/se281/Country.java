@@ -1,14 +1,20 @@
 package nz.ac.auckland.se281;
 
+import java.util.Objects;
+
 public class Country {
   private String name;
   private String continent;
-  private int fee;
+  private String fee;
 
-  public Country(String name, String continent, int fee) {
+  public Country(String name, String continent, String fee) {
     this.name = name;
     this.continent = continent;
     this.fee = fee;
+  }
+
+  public String getName() {
+    return name;
   }
 
   @Override
@@ -24,8 +30,7 @@ public class Country {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    return prime + fee;
+    return Objects.hash(this.name, this.continent, this.fee);
   }
 
   @Override
