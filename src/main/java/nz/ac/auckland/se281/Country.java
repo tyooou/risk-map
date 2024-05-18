@@ -13,7 +13,13 @@ public class Country {
 
   @Override
   public String toString() {
-    return name + " => continent: " + continent + ", tax fees: " + fee;
+    StringBuilder sb = new StringBuilder();
+    sb.append(name);
+    sb.append(" => continent: ");
+    sb.append(continent);
+    sb.append(", tax fees: ");
+    sb.append(fee);
+    return sb.toString();
   }
 
   @Override
