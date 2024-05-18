@@ -25,16 +25,20 @@ public class MapEngine {
     }
 
     for (String adjacency : adjacencies) {
-      String[] adjacenctCountries = adjacency.split(",");
-      Queue<Country> adjacenctCountriesQueue = new LinkedList<>();
+      String[] adjacentCountries = adjacency.split(",");
+      Queue<Country> adjacentCountriesQueue = new LinkedList<>();
 
-      for (String country : adjacenctCountries) {
-        adjacenctCountriesQueue.add(map.getCountry(country));
+      for (String country : adjacentCountries) {
+        try {
+          adjacentCountriesQueue.add(map.getCountry(country));
+        } catch (CountryDoesNotExistException e) {
+          MessageCli.INVALID_COUNTRY.printMessage(country);
+        }
       }
 
-      Country start = adjacenctCountriesQueue.remove();
-      while (!adjacenctCountriesQueue.isEmpty()) {
-        map.addPath(start, adjacenctCountriesQueue.remove());
+      Country start = adjacentCountriesQueue.remove();
+      while (!adjacentCountriesQueue.isEmpty()) {
+        map.addPath(start, adjacentCountriesQueue.remove());
       }
     }
 
@@ -42,7 +46,21 @@ public class MapEngine {
   }
 
   /** this method is invoked when the user run the command info-country. */
-  public void showInfoCountry() {}
+  public void showInfoCountry() {
+    boolean flag = false;
+    do {
+      MessageCli.INSERT_COUNTRY.printMessage();
+      String input = Utils.capitalizeFirstLetterOfEachWord(Utils.scanner.nextLine().trim());
+      try {
+        Country targetCountry = map.getCountry(input);
+        MessageCli.COUNTRY_INFO.printMessage(
+            targetCountry.getName(), targetCountry.getContinent(), targetCountry.getFee());
+        flag = true;
+      } catch (CountryDoesNotExistException e) {
+        MessageCli.INVALID_COUNTRY.printMessage(input);
+      }
+    } while (!flag);
+  }
 
   /** this method is invoked when the user run the command route. */
   public void showRoute() {}

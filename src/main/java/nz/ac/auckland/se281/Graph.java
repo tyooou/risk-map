@@ -23,13 +23,12 @@ public class Graph {
     adjCountries.get(lastCountry).add(firstCountry);
   }
 
-  public Country getCountry(String name) {
+  public Country getCountry(String name) throws CountryDoesNotExistException {
     for (Country country : adjCountries.keySet()) {
-      ;
       if (country.getName().equals(name)) {
         return country;
       }
     }
-    return null;
+    throw new CountryDoesNotExistException();
   }
 }
