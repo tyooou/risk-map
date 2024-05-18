@@ -1,3 +1,5 @@
+package nz.ac.auckland.se281;
+
 public class Country {
   private String name;
   private String continent;
