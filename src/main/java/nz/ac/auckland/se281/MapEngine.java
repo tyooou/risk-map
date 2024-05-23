@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -68,17 +69,35 @@ public class MapEngine {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
     } else {
       List<Country> path = map.findShortestRoute(source, destination);
-      StringBuilder sb = new StringBuilder();
+      StringBuilder pathCountries = new StringBuilder();
 
-      sb.append("[");
+      pathCountries.append("[");
       for (int i = 0; i < path.size() - 1; i++) {
-        sb.append(path.get(i).toString());
-        sb.append(", ");
+        pathCountries.append(path.get(i).toString());
+        pathCountries.append(", ");
       }
-      sb.append(path.get(path.size() - 1));
-      sb.append("]");
+      pathCountries.append(path.get(path.size() - 1));
+      pathCountries.append("]");
 
-      MessageCli.ROUTE_INFO.printMessage(sb.toString());
+      MessageCli.ROUTE_INFO.printMessage(pathCountries.toString());
+
+      List<String> continents = new ArrayList<>();
+      StringBuilder pathContinents = new StringBuilder();
+      for (Country country : path) {
+        if (!continents.contains(country.getContinent())) {
+          continents.add(country.getContinent());
+        }
+      }
+
+      pathContinents.append("[");
+      for (int i = 0; i < continents.size() - 1; i++) {
+        pathContinents.append(continents.get(i).toString());
+        pathContinents.append(", ");
+      }
+      pathContinents.append(continents.get(continents.size() - 1));
+      pathContinents.append("]");
+
+      MessageCli.CONTINENT_INFO.printMessage(pathContinents.toString());
     }
   }
 
