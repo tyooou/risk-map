@@ -23,7 +23,6 @@ public class Graph {
     addCountry(firstCountry);
     addCountry(lastCountry);
     adjCountries.get(firstCountry).add(lastCountry);
-    adjCountries.get(lastCountry).add(firstCountry);
   }
 
   public Country getCountry(String name) throws CountryDoesNotExistException {
@@ -48,6 +47,7 @@ public class Graph {
 
     while (!queue.isEmpty()) {
       Country country = queue.poll();
+      System.out.println(adjCountries.get(country));
       for (Country n : adjCountries.get(country)) {
         if (!visited.contains(n)) {
           visited.add(n);
@@ -55,14 +55,6 @@ public class Graph {
           previous.add(country);
         }
       }
-    }
-
-    for (Country country : visited) {
-      System.out.println(country);
-    }
-
-    for (Country country : previous) {
-      System.out.println(country);
     }
 
     boolean flag = false;
@@ -73,7 +65,6 @@ public class Graph {
       }
       path.add(country);
       country = previous.get(visited.indexOf(country));
-      System.out.println(country);
     }
 
     Collections.reverse(path);

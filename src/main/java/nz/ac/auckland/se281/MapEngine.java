@@ -37,7 +37,6 @@ public class MapEngine {
           MessageCli.INVALID_COUNTRY.printMessage(country);
         }
       }
-
       Country start = adjacentCountriesQueue.remove();
       while (!adjacentCountriesQueue.isEmpty()) {
         map.addPath(start, adjacentCountriesQueue.remove());
@@ -67,20 +66,20 @@ public class MapEngine {
 
     if (source == destination) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+    } else {
+      List<Country> path = map.findShortestRoute(source, destination);
+      StringBuilder sb = new StringBuilder();
+
+      sb.append("[");
+      for (int i = 0; i < path.size() - 1; i++) {
+        sb.append(path.get(i).toString());
+        sb.append(", ");
+      }
+      sb.append(path.get(path.size() - 1));
+      sb.append("]");
+
+      MessageCli.ROUTE_INFO.printMessage(sb.toString());
     }
-
-    List<Country> path = map.findShortestRoute(source, destination);
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("[");
-    for (int i = 0; i < path.size() - 1; i++) {
-      sb.append(path.get(i).toString());
-      sb.append(", ");
-    }
-    sb.append(path.get(path.size() - 1));
-    sb.append("]");
-
-    MessageCli.ROUTE_INFO.printMessage(sb.toString());
   }
 
   public Country getInput() {
