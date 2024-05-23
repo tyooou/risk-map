@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Country {
   private String name;
   private String continent;
-  private String fee;
+  private int fee;
 
-  public Country(String name, String continent, String fee) {
+  public Country(String name, String continent, int fee) {
     this.name = name;
     this.continent = continent;
     this.fee = fee;
@@ -21,7 +21,7 @@ public class Country {
     return continent;
   }
 
-  public String getFee() {
+  public int getFee() {
     return fee;
   }
 

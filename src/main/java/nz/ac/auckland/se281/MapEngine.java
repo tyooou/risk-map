@@ -23,7 +23,7 @@ public class MapEngine {
     // Add countries to graph.
     for (String country : countries) {
       String[] countryInfo = country.split(",");
-      map.addCountry(new Country(countryInfo[0], countryInfo[1], countryInfo[2]));
+      map.addCountry(new Country(countryInfo[0], countryInfo[1], Integer.parseInt(countryInfo[2])));
     }
 
     // Connect adjacent countries.
@@ -54,7 +54,8 @@ public class MapEngine {
     Country target = getInput();
 
     // Prompt user with country information.
-    MessageCli.COUNTRY_INFO.printMessage(target.getName(), target.getContinent(), target.getFee());
+    MessageCli.COUNTRY_INFO.printMessage(
+        target.getName(), target.getContinent(), Integer.toString(target.getFee()));
   }
 
   /** this method is invoked when the user run the command route. */
@@ -98,6 +99,12 @@ public class MapEngine {
       pathContinents.append("]");
 
       MessageCli.CONTINENT_INFO.printMessage(pathContinents.toString());
+
+      int taxes = 0;
+      for (int i = 1; i < path.size(); i++) {
+        taxes += path.get(i).getFee();
+      }
+      MessageCli.TAX_INFO.printMessage(Integer.toString(taxes));
     }
   }
 
