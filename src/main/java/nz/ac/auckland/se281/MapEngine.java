@@ -19,13 +19,13 @@ public class MapEngine {
     List<String> countries = Utils.readCountries();
     List<String> adjacencies = Utils.readAdjacencies();
 
-    // Add nodes.
+    // Add countries to graph.
     for (String country : countries) {
       String[] countryInfo = country.split(",");
       map.addCountry(new Country(countryInfo[0], countryInfo[1], countryInfo[2]));
     }
 
-    // Connect nodes.
+    // Connect adjacent countries.
     for (String adjacency : adjacencies) {
       String[] adjacentCountries = adjacency.split(",");
       Queue<Country> adjacentCountriesQueue = new LinkedList<>();
@@ -45,10 +45,15 @@ public class MapEngine {
     }
   }
 
-  /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
+
+    // Ask user for the target country;
     MessageCli.INSERT_COUNTRY.printMessage();
+
+    // Fetch the country if it exist, if not, keep asking for a valid country.
     Country target = getInput();
+
+    // Prompt user with country information.
     MessageCli.COUNTRY_INFO.printMessage(target.getName(), target.getContinent(), target.getFee());
   }
 
@@ -63,6 +68,19 @@ public class MapEngine {
     if (source == destination) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
     }
+
+    List<Country> path = map.findShortestRoute(source, destination);
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[");
+    for (int i = 0; i < path.size() - 1; i++) {
+      sb.append(path.get(i).toString());
+      sb.append(", ");
+    }
+    sb.append(path.get(path.size() - 1));
+    sb.append("]");
+
+    MessageCli.ROUTE_INFO.printMessage(sb.toString());
   }
 
   public Country getInput() {
