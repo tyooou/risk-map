@@ -9,69 +9,115 @@ import java.util.Map;
 import java.util.Queue;
 
 public class Graph {
+  // Initialise the map.
   private Map<Country, List<Country>> adjCountries;
 
+  /** Constructor class. Initialise the map on creation. */
   public Graph() {
     this.adjCountries = new HashMap<>();
   }
 
+  /**
+   * Add a country to the map.
+   *
+   * @param country country
+   */
   public void addCountry(Country country) {
+    // Add the country to the map.
     adjCountries.putIfAbsent(country, new ArrayList<>());
   }
 
-  public void addPath(Country firstCountry, Country lastCountry) {
-    addCountry(firstCountry);
-    addCountry(lastCountry);
-    adjCountries.get(firstCountry).add(lastCountry);
+  /**
+   * Add a one-way path from one country to another on the map (as the correctly formatted data
+   * specifies both paths).
+   *
+   * @param source source country
+   * @param destination destination country
+   */
+  public void addPath(Country source, Country destination) {
+    // Add the source and the destination to the map if they do not exist.
+    addCountry(source);
+    addCountry(destination);
+
+    // Add a one-way path from the source to the destination.
+    adjCountries.get(source).add(destination);
   }
 
+  /**
+   * Fetches the country object by its name if it exist on the map.
+   *
+   * @param name the name of the country
+   * @return the country
+   * @throws CountryDoesNotExistException
+   */
   public Country getCountry(String name) throws CountryDoesNotExistException {
     // Searchs if there is a country with the name.
     for (Country country : adjCountries.keySet()) {
       if (country.getName().equals(name)) {
+        // Return country if found on the map.
         return country;
       }
     }
+    // Throw exception if the country is not found on the map.
     throw new CountryDoesNotExistException();
   }
 
-  public List<Country> findShortestRoute(Country source, Country destination) {
+  /**
+   * Finds the shortest path between a source country and destination country using a breadth-first
+   * search algorithm.
+   *
+   * @param source source country
+   * @param destination destination country
+   * @return array of countries representing path (source --> .... --> destination)
+   */
+  public List<Country> findShortestRoute(Country source, Country destination)
+      throws NoPathFoundException {
+
+    // Initialise necessary data structures.
+    Queue<Country> queue = new LinkedList<>();
     List<Country> visited = new ArrayList<>();
     List<Country> previous = new ArrayList<>();
-    Queue<Country> queue = new LinkedList<>();
     List<Country> path = new ArrayList<>();
 
     queue.add(source);
     visited.add(source);
     previous.add(null);
 
+    // Do a breadth-first search.
     while (!queue.isEmpty()) {
       Country country = queue.poll();
-      System.out.println(adjCountries.get(country));
       for (Country n : adjCountries.get(country)) {
         if (!visited.contains(n)) {
           visited.add(n);
           queue.add(n);
+
+          // Keep track of previous nodes.
           previous.add(country);
         }
       }
     }
 
-    boolean flag = false;
-    Country country = destination;
-    while (!flag) {
-      if (country == source) {
-        flag = true;
+    // Check if accessible path exists.
+    if (!visited.contains(destination)) {
+      throw new NoPathFoundException();
+    } else {
+      boolean flag = false;
+      Country country = destination;
+
+      while (!flag) {
+        // Backtrack from the destination to the source.
+        path.add(country);
+        country = previous.get(visited.indexOf(country));
+
+        // End loop after the source is reached.
+        if (country == null) {
+          flag = true;
+        }
       }
-      path.add(country);
-      country = previous.get(visited.indexOf(country));
-    }
 
-    Collections.reverse(path);
-
-    if (path.get(0) == source) {
+      // Reverse the path for formatting.
+      Collections.reverse(path);
       return path;
     }
-    return List.of();
   }
 }
