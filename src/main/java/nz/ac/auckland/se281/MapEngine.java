@@ -5,6 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The map engine that allows a geographic map to be loaded from .csv files. The information about
+ * the countries can be accessed and the shortest route between countries can be found by the user.
+ */
 public class MapEngine {
 
   // Initialise map.

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+/** A graph that allows for countries and paths to be initialised. Represents a geographical map. */
 public class Graph {
   // Initialise the map.
   private Map<Country, List<Country>> adjCountries;

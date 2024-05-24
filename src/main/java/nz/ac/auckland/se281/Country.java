@@ -2,6 +2,10 @@ package nz.ac.auckland.se281;
 
 import java.util.Objects;
 
+/**
+ * Graph node object that represents a country. All countries must have a name, an appropriate
+ * continent and a cross-border tax.
+ */
 public class Country {
   private String name;
   private String continent;
