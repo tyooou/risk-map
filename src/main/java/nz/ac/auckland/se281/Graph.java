@@ -77,7 +77,7 @@ public class Graph {
     Queue<Country> queue = new LinkedList<>();
     List<Country> visited = new ArrayList<>();
     List<Country> previous = new ArrayList<>();
-    List<Country> path = new ArrayList<>();
+    List<Country> path = new LinkedList<>();
 
     queue.add(source);
     visited.add(source);
