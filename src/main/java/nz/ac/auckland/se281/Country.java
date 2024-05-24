@@ -58,19 +58,30 @@ public class Country {
   }
 
   /**
-   * Determine if countries are equivalent or not.
+   * Determine if countries are equivalent or not. It checks if the country is not null, a country,
+   * has a name, and equals its name, to determine if they are equal.
    *
    * @return if the country is equal to another country
    */
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
     Country other = (Country) obj;
     if (name == null) {
-      if (other.name != null) return false;
-    } else if (!name.equals(other.name)) return false;
+      if (other.name != null) {
+        return false;
+      }
+    } else if (!name.equals(other.name)) {
+      return false;
+    }
     return true;
   }
 

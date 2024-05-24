@@ -112,7 +112,7 @@ public class MapEngine {
    * @return country with specified name
    */
   public Country processInput() {
-    boolean flag = false;
+    boolean flag;
     Country target = null;
     do {
       // Ask user for the name of the country. Lower case is handled, however, capitilisation
