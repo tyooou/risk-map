@@ -48,7 +48,7 @@ public class Graph {
    *
    * @param name the name of the country
    * @return the country
-   * @throws CountryDoesNotExistException
+   * @throws CountryDoesNotExistException country does not exist on the map
    */
   public Country getCountry(String name) throws CountryDoesNotExistException {
     // Searchs if there is a country with the name.
@@ -69,6 +69,7 @@ public class Graph {
    * @param source source country
    * @param destination destination country
    * @return array of countries representing path (source --> .... --> destination)
+   * @throws NoPathFoundException no path exists between the source and destination on the map
    */
   public List<Country> findShortestRoute(Country source, Country destination)
       throws NoPathFoundException {

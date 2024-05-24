@@ -21,7 +21,7 @@ public class Country {
   }
 
   /**
-   * Get name of country.
+   * Get name of the country. This is also used to identify the country by the map engine.
    *
    * @return name of country
    */
