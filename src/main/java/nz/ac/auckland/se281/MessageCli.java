@@ -20,7 +20,7 @@ public enum MessageCli {
   INSERT_DESTINATION("Insert the name of the country of destination: "),
   NO_CROSSBORDER_TRAVEL("No cross-border travel is required!"),
   ROUTE_INFO("The fastest route is: %s"),
-  CONTINENT_INFO("You will visit the following countries: %s"),
+  CONTINENT_INFO("You will visit the following continents: %s"),
   TAX_INFO("You will spend this amount %s for cross-border taxes");
 
   private final String msg;
