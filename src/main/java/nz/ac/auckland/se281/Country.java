@@ -66,7 +66,7 @@ public class Country {
   }
 
   /**
-   * Generate unique hashCode for the countries based on their name, continent and fee;
+   * Generate unique hashCode for the countries based on their name, continent and fee.
    *
    * @return unique hashCode
    */
