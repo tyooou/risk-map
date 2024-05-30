@@ -1,6 +1,6 @@
 package nz.ac.auckland.se281;
 
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Graph node object that represents a country. All countries must have a name, an appropriate
@@ -52,18 +52,37 @@ public class Country {
   }
 
   /**
-   * Generate unique hashCode for the countries.
+   * Find the sum of the ASCII values of a string.
+   *
+   * @param string string to find sum of ASCII values
+   * @return sum of ASCII values
+   */
+  public int sumBytes(String string) {
+    int result = 0;
+    for (int num : string.getBytes(StandardCharsets.US_ASCII)) {
+      result += num;
+    }
+    return result;
+  }
+
+  /**
+   * Generate unique hashCode for the countries based on their name, continent and fee;
    *
    * @return unique hashCode
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this.name, this.continent, this.fee);
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + sumBytes(this.name);
+    result = prime * result + sumBytes(this.continent);
+    result = prime * result + this.fee;
+    return result;
   }
 
   /**
    * Determine if countries are equivalent or not. It checks if the country is not null, a country,
-   * has a name, and equals its name, to determine if they are equal.
+   * has a name, equals its name and continent, to determine if they are equal.
    *
    * @return if the country is equal to another country
    */
