@@ -85,6 +85,8 @@ public class Country {
       }
     } else if (!name.equals(other.name)) {
       return false;
+    } else if (!continent.equals(other.continent)) {
+      return false;
     }
     return true;
   }
